@@ -9,16 +9,23 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
   const root = document.getElementById("root");
-  const Title = (
-    <h3 id="title" onMouseEnter={()=>console.log("mouse enter")}>
-      Hello I'm a title
-    </h3>); // JSX 문법을 사용하여 React element를 생성
-  const Button = <button
+  function Title() { // 컴포넌트는 대문자로 시작해야 함 (소문자는 HTML 태그로 인식됨)
+    return (
+      <h3 id="title" onMouseEnter={() => console.log("mouse enter")}>
+        Hello I'm a title
+      </h3>);
+  }
+  const Button = () => <button
     style={{ backgroundColor: "tomato" }} onClick={() => console.log("i'm clicked!")}>
     Click me
-  </button>; // JSX 문법을 사용하여 React element를 생성
-  const container = React.createElement("div", null, [Title, Button]); // propery는 null, 배열을 통해 두 개의 element를 넣어줌
-  ReactDOM.render(container, root); // react element 'container'를 root div에 렌더링
+  </button>;
+  const Container = () => (
+    <div>
+      <Title />
+      <Button />
+    </div>
+  );
+  ReactDOM.render(<Container/>, root); // react element 'container'를 root div에 렌더링
 </script>
 
 </html>
