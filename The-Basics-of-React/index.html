@@ -6,23 +6,18 @@
 </body>
 <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
-<script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
   const root = document.getElementById("root");
-  const h3 = React.createElement(
-    "h3",
-    { onMouseEnter: () => console.log("mouse enter") }, // event listener
-    "Hello I'm a span!"
-  );
-  const btn = React.createElement(
-    "button",
-    {
-      onClick: () => console.log("i'm clicked!"), // event listener
-      style: {
-        backgroundColor: "tomato",
-      },
-    },
-    "Click me");
-  const container = React.createElement("div", null, [h3, btn]); // propery는 null, 배열을 통해 두 개의 element를 넣어줌
+  const Title = (
+    <h3 id="title" onMouseEnter={()=>console.log("mouse enter")}>
+      Hello I'm a title
+    </h3>); // JSX 문법을 사용하여 React element를 생성
+  const Button = <button
+    style={{ backgroundColor: "tomato" }} onClick={() => console.log("i'm clicked!")}>
+    Click me
+  </button>; // JSX 문법을 사용하여 React element를 생성
+  const container = React.createElement("div", null, [Title, Button]); // propery는 null, 배열을 통해 두 개의 element를 넣어줌
   ReactDOM.render(container, root); // react element 'container'를 root div에 렌더링
 </script>
 
