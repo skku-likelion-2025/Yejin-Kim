@@ -9,23 +9,32 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
 
-  function Btn({text, big}) { // props -> props는 object
-    return <button style={{
-      backgroundColor: 'tomato',
-      color: 'white',
-      padding: '10px 20px',
-      border: 0,
-      borderRadius: 10,
-      fontSize: big ? 18 : 16, 
-    }}>{text}</button>; // props.text
-  }
-
-  function App() {
-
+  function Btn({ text, changeValue }) { // props -> props는 object
+    console.log (text, 'was rengered');
     return (
       <div>
-        <Btn text='save changes' big={true} />
-        <Btn text='continue' />
+        <button
+          onClick={changeValue}
+          style={{
+            backgroundColor: 'tomato',
+            color: 'white',
+            padding: '10px 20px',
+            border: 0,
+            borderRadius: 10,
+
+          }}>{text}</button>
+      </div>); // props.text
+  }
+
+  const MemorizedBtn = React.memo(Btn);
+
+  function App() {
+    const [value, setValue] = React.useState('Save Changes');
+    const changeValue = () => setValue('Revert Changes');
+    return (
+      <div>
+        <MemorizedBtn text={value} changeValue={changeValue} />
+        <MemorizedBtn text='continue' />
 
       </div>
     );
