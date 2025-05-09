@@ -11,8 +11,8 @@ function App() {
     }
     setToDos((currentArray) => [toDo, ...currentArray]);
     setToDo('');
-    console.log({...toDos});
   }
+  console.log({ ...toDos });
   return (
     <div>
       <h1>My To Dos ({toDos.length})</h1>
@@ -22,8 +22,9 @@ function App() {
           value={toDo}
           type='text'
           placeholder='write your todo...' />
+        <button>Add Todo</button>
       </form>
-      <button>Add Todo</button>
+
     </div>
   );
 }
