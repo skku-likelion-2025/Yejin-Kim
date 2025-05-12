@@ -1,33 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
+
 function App() {
-  const [toDo, setToDo] = useState('')
-  const [toDos, setToDos] = useState([]);
-  const onChange = (e) => setToDo(e.target.value);
-  const onSubmit = (e) => {
-    e.preventDefault();
-    console.log({ toDo });
-    if (toDo === '') {
-      return;
-    }
-    setToDos((currentArray) => [toDo, ...currentArray]); // 힘수를 보냄, 현재 state를 새로운 state 계산에 사용 
-    setToDo(''); // value를 보냄 
-  }
-  console.log(toDos);
+  const [loading, setLoading] = useState(true);
+  const [coins, setCoins] = useState([]); // 기본값 중요, undefined 상태로 있는 것 방지 
+  useEffect(() => {
+    fetch('https://api.coinpaprika.com/v1/tickers')
+      .then((response) => response.json())
+      .then((json) => {
+        setCoins(json);
+        setLoading(false);
+      });
+  }, [])
+
   return (
     <div>
-      <h1>My To Dos ({toDos.length})</h1>
-      <form onSubmit={onSubmit}>
-        <input
-          onChange={onChange}
-          value={toDo}
-          type='text'
-          placeholder='write your todo...' />
-        <button>Add Todo</button>
-      </form>
-      <hr />
-      {toDos.map((item, index) => <li key={index}>{item}</li>)} 
-      {/* array의 element들을 바꿀 때 map은 함수를 넣을 수 있도록 함 map은 모든 element들에 대해 실행됨  */}
+      <h1>Coin! {loading ? '' : `(${coins.length})`}</h1>
+      {loading ? <strong>Loading...</strong> :
+        <select>
+          {coins.map((coin) =>
+            <option>{coin.name} ({coin.symbol}): ${coin.quotes.USD.price} USD</option>)}
+        </select>}
     </div>
   );
 }
-export default App;
+
+export default App; 
